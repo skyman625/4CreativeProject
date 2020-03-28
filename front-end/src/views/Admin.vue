@@ -8,6 +8,7 @@
 <div class="add">
 <div class="form">
   <input v-model="title" placeholder="Title">
+  <input v-model="description" placeholder="Description">
   <p></p>
   <input type="file" name="photo" @change="fileChanged">
   <button @click="upload">Upload</button>
@@ -15,6 +16,7 @@
 <div class="upload" v-if="addItem">
   <h2>{{addItem.title}}</h2>
   <img :src="addItem.path" />
+  <h3>{{addItem.description}}</h3>
 </div>
 </div>
 
@@ -32,6 +34,7 @@
      </div>
      <div class="upload" v-if="findItem">
        <input v-model="findItem.title">
+       <input v-model="findItem.description">
        <p></p>
        <img :src="findItem.path" />
      </div>
@@ -48,6 +51,11 @@
 .image h2 {
   font-style: italic;
   font-size: 1em;
+}
+.image h3 {
+  font-style: italic;
+  font-size: 0.7em;
+  color: #808080;
 }
 
 .heading {
@@ -94,6 +102,7 @@ button {
   margin: 0px;
 }
 
+
 .upload img {
   max-width: 300px;
 }
@@ -121,6 +130,7 @@ export default {
   data() {
     return {
       title: "",
+      description: "",
       file: null,
       addItem: null,
       items: [],
@@ -148,6 +158,7 @@ export default {
         let r1 = await axios.post('/api/photos', formData);
         let r2 = await axios.post('/api/items', {
           title: this.title,
+          description: this.description,
           path: r1.data.path
         });
         this.addItem = r2.data;
@@ -182,6 +193,7 @@ export default {
       try {
         await axios.put("/api/items/" + item._id, {
           title: this.findItem.title,
+          description: this.findItem.description,
         });
         this.findItem = null;
         this.getItems();

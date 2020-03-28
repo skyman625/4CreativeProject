@@ -4,6 +4,7 @@
     <div class="image" v-for="item in items" :key="item.id">
       <h2>{{item.title}}</h2>
       <img :src="item.path" />
+      <h3>{{item.description}}</h3>
     </div>
   </section>
 </div>
@@ -12,6 +13,11 @@
 <style scoped>
 .image h2 {
   font-style: italic;
+}
+.image h3 {
+  font-style: italic;
+  font-size: 0.7em;
+  color: #808080;
 }
 
 /* Masonry */
