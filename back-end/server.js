@@ -26,6 +26,7 @@ const upload = multer({
 // Create a scheme for items in the museum: a title and a path to an image.
 const itemSchema = new mongoose.Schema({
   title: String,
+  artist: String,
   description: String,
   path: String,
 });
@@ -49,6 +50,7 @@ app.post('/api/photos', upload.single('photo'), async (req, res) => {
 app.post('/api/items', async (req, res) => {
   const item = new Item({
     title: req.body.title,
+    artist: req.body.artist,
     description: req.body.description,
     path: req.body.path,
   });
@@ -90,6 +92,7 @@ app.put('/api/items/:id', async (req, res) => {
       _id: req.params.id
     });
     item.title = req.body.title;
+    item.artist = req.body.artist;
     item.description = req.body.description;
     await item.save();
     res.send(item);
