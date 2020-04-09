@@ -1,28 +1,33 @@
 <template>
 <div class="admin">
-<h1>The Admin Page!</h1>
+<h1>Upload or edit music recommendations</h1>
+<br>
+<hr>
 <div class="heading">
-<div class="circle">1</div>
-<h2>Add an Item</h2>
+<img src="/music.png">
+<h2>Upload a music recommendation</h2>
 </div>
 <div class="add">
 <div class="form">
-  <input v-model="title" placeholder="Title">
-  <input v-model="description" placeholder="Description">
+  <input v-model="title" placeholder="Album Name">
+  <input v-model="artist" placeholder="Artist Name">
+  <input v-model="description" placeholder="Comments">
   <p></p>
+  <p>Album art:</p>
   <input type="file" name="photo" @change="fileChanged">
   <button @click="upload">Upload</button>
 </div>
 <div class="upload" v-if="addItem">
-  <h2>{{addItem.title}}</h2>
-  <img :src="addItem.path" />
-  <h3>{{addItem.description}}</h3>
+  <img src="/check.png">
 </div>
 </div>
+<br>
 
+<br>
+<hr>
 <div class="heading">
-     <div class="circle">2</div>
-     <h2>Edit/Delete an Item</h2>
+<img src="/music.png">
+     <h2>Edit/Remove a recommendation</h2>
    </div>
    <div class="edit">
      <div class="form">
@@ -34,6 +39,7 @@
      </div>
      <div class="upload" v-if="findItem">
        <input v-model="findItem.title">
+       <input v-model="findItem.artist">
        <input v-model="findItem.description">
        <p></p>
        <img :src="findItem.path" />
@@ -43,11 +49,18 @@
        <button @click="editItem(findItem)">Edit</button>
      </div>
    </div>
+   <br>
+   <br>
+   <hr>
 
 </div>
 </template>
 
 <style scoped>
+img {
+  height: 30px;
+  width: auto;
+}
 .image h2 {
   font-style: italic;
   font-size: 1em;
@@ -130,6 +143,7 @@ export default {
   data() {
     return {
       title: "",
+      artist: "",
       description: "",
       file: null,
       addItem: null,
@@ -158,6 +172,7 @@ export default {
         let r1 = await axios.post('/api/photos', formData);
         let r2 = await axios.post('/api/items', {
           title: this.title,
+          artist: this.artist,
           description: this.description,
           path: r1.data.path
         });
@@ -193,6 +208,7 @@ export default {
       try {
         await axios.put("/api/items/" + item._id, {
           title: this.findItem.title,
+          artist: this.findItem.artist,
           description: this.findItem.description,
         });
         this.findItem = null;

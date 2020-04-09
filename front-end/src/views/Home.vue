@@ -1,8 +1,13 @@
 <template>
 <div class="home">
+<h1>This is a site for music recommendations! Upload an album with the artist name,
+and comments about favorite tracks or trivia about the artist.</h1>
+<h1>Click on the Upload/Edit link to get started!</h1>
+<router-link to="/admin">Upload/Edit</router-link>
   <section class="image-gallery">
     <div class="image" v-for="item in items" :key="item.id">
-      <h2>{{item.title}}</h2>
+      <h2>Album Name: {{item.title}}</h2>
+      <h3>By: {{item.artist}}</h3>
       <img :src="item.path" />
       <h3>{{item.description}}</h3>
     </div>
